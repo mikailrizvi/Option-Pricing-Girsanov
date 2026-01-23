@@ -42,3 +42,23 @@ if __name__ == "__main__":
     print("--------------------------------------------")
     print(f"shift our random draws (Z) by +{lam:.6f}")
     print("standard deviations to make the stock hit $140 on average.")
+
+def calculate_likelihood_ratio(Z_shifted: np.ndarray, lam: float) -> np.ndarray:
+    """
+    Calculates the Radon-Nikodym derivative (Likelihood Ratio) L.
+    
+    Formula:
+    L = exp( -lambda * Z_shifted + 0.5 * lambda^2 )
+    
+    Parameters:
+        Z_shifted (np.array): The random numbers used in the simulation (already shifted!)
+        lam (float): The shift amount (lambda)
+        
+    Returns:
+        np.array: The weights for each path.
+    """
+    # Vectorized calculation
+    exponent = -lam * Z_shifted + 0.5 * lam**2
+    L = np.exp(exponent)
+    
+    return L
